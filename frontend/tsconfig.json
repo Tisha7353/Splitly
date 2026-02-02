@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    /* Path aliases */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+
+    /* React / JSX */
+    "jsx": "react-jsx",
+
+    /* Modern setup */
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+
+    /* Quality of life */
+    "strict": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "noEmit": true
+  },
+
+  "include": ["src"]
+}
