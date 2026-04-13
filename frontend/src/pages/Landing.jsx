@@ -1,159 +1,164 @@
-
-import { ArrowRight, PieChart, ShieldCheck, Users } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-import { motion } from "framer-motion";
+
 export default function Landing() {
   const navigate = useNavigate();
 
-const handleLogin = () => {
-  navigate("/login");
-};
-
-
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
-      
+    <div className="min-h-screen  text-foreground overflow-hidden">
+
       {/* ================= NAVBAR ================= */}
-      <nav className="border-b bg-white/60 backdrop-blur sticky top-0 z-50">
+     <nav className="sticky top-0 z-50 backdrop-blur-xl 
+  bg-green-50/70 border-b border-green-100">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-       <div className="flex items-center gap-2">
-  <img
-   src="/Splitly.png" 
-    alt="Splitly logo"
-    className="h-8 w-8 object-contain"
-  />
-  <span className="text-2xl font-display font-bold text-primary">
-    Splitly
-  </span>
-</div>
-         <button
-  onClick={handleLogin}
-  className="
-    px-4 py-2
-    rounded-full
-    border border-primary/20
-    bg-primary/5
-    text-primary
-    text-sm font-semibold
-    hover:bg-primary hover:text-white
-    transition-all duration-200
-  "
->
-  Log in
-</button>
+          <div className="flex items-center gap-3">
+            <img src="/Splitly.png" className="h-9 w-9" />
+            <span className="text-xl font-semibold text-primary">Splitly</span>
+          </div>
 
+          <button
+            onClick={() => navigate("/login")}
+            className="px-5 py-2 rounded-full border border-primary/20 bg-primary/5 text-primary hover:bg-primary hover:text-white transition"
+          >
+            Login
+          </button>
         </div>
-      </nav>
+      </nav><div className="absolute bottom-0 left-0 w-full h-[1px] 
+  bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+<section className="relative pt-28 pb-24 overflow-hidden">
 
-      {/* ================= HERO ================= */}
-      <main className="flex-1">
-        <section className="relative overflow-hidden py-20 lg:py-32">
-          
-          {/* Background blob */}
-          <div
-            className="absolute top-0 left-1/2 -translate-x-1/2
-            w-[1000px] h-[600px]
-            bg-primary/10
-            rounded-[100%]
-            blur-3xl -z-10"
-          />
+  {/* 🌈 MAIN GRADIENT BACKGROUND */}
+  <div className="absolute inset-0 -z-30 
+    bg-gradient-to-br from-[#e6f7f1] via-[#eef2ff] to-[#e0f2fe]" 
+  />
 
-          <div className="max-w-4xl mx-auto px-6 text-center">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-5xl lg:text-7xl font-display font-bold leading-[1.1] mb-6"
-            >
-              Split expenses,
-              <br className="hidden md:block" />
-              <span className="text-primary"> keep friends.</span>
-            </motion.h1>
+  {/* 🌊 LEFT GLOW */}
+  <div className="absolute -left-40 top-20 w-[500px] h-[500px] 
+    bg-[#22c55e]/50 blur-[140px] rounded-full -z-20" />
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto"
-            >
-              The easiest way to track shared bills and balances with
-              housemates, trips, and friends. No more awkward math.
-            </motion.p>
+  {/* 🌊 RIGHT GLOW */}
+  <div className="absolute -right-40 bottom-10 w-[500px] h-[500px] 
+    bg-[#3b82f6]/50 blur-[140px] rounded-full -z-20" />
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <button
-                 onClick={() => navigate("/register")}
-                className="inline-flex items-center gap-2
-                  bg-primary text-primary-foreground
-                  h-14 px-8 rounded-full text-lg font-medium
-                  shadow-xl shadow-primary/25
-                  hover:shadow-2xl hover:shadow-primary/30
-                  transition-all hover:-translate-y-1"
-              >
-                Get Started for Free
-                <ArrowRight className="h-5 w-5" />
-              </button>
-            </motion.div>
-          </div>
-        </section>
+  {/* ✨ CENTER LIGHT (IMPORTANT FOR PREMIUM LOOK) */}
+  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[400px] 
+    bg-white/70 blur-[140px] rounded-full -z-20" />
 
-        {/* ================= FEATURES ================= */}
-        <section className="py-20 bg-muted/40">
-          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-10">
+  {/* 🔳 STRONG VISIBLE GRID */}
+  <div
+    className="absolute inset-0 -z-10"
+    style={{
+      backgroundImage: `
+        linear-gradient(to right, rgba(0,0,0,0.12) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.12) 1px, transparent 1px)
+      `,
+      backgroundSize: "40px 40px",
+    }}
+  />
 
-            {/* Feature 1 */}
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-border hover:shadow-md transition">
-              <div className="mb-4 bg-muted w-16 h-16 rounded-xl flex items-center justify-center">
-                <Users className="h-8 w-8 text-indigo-500" />
-              </div>
-              <h3 className="text-xl font-display font-bold mb-3">
-                Groups & Friends
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Create groups for trips, housemates, or projects.
-                Add members easily.
-              </p>
-            </div>
+  {/* ✨ FLOATING CARDS */}
+  <div className="hidden lg:block absolute left-20 top-44 
+    bg-white/80 backdrop-blur-xl border rounded-xl shadow-xl px-5 py-3 rotate-[-6deg]">
+    <p className="text-xs text-gray-500">You are owed</p>
+    <p className="font-bold text-green-600 text-lg">₹1,250</p>
+  </div>
 
-            {/* Feature 2 */}
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-border hover:shadow-md transition">
-              <div className="mb-4 bg-muted w-16 h-16 rounded-xl flex items-center justify-center">
-                <PieChart className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="text-xl font-display font-bold mb-3">
-                Smart Splitting
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Split equally, by percentage, or exact amounts.
-                We do the math.
-              </p>
-            </div>
+  <div className="hidden lg:block absolute right-20 top-52 
+    bg-white/80 backdrop-blur-xl border rounded-xl shadow-xl px-5 py-3 rotate-[6deg]">
+    <p className="text-xs text-gray-500">Trip balance</p>
+    <p className="font-bold text-blue-600 text-lg">+₹820</p>
+  </div>
 
-            {/* Feature 3 */}
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-border hover:shadow-md transition">
-              <div className="mb-4 bg-muted w-16 h-16 rounded-xl flex items-center justify-center">
-                <ShieldCheck className="h-8 w-8 text-amber-500" />
-              </div>
-              <h3 className="text-xl font-display font-bold mb-3">
-                Secure & Private
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Your financial data is encrypted and secure.
-              </p>
-            </div>
+  {/* 🔥 CONTENT */}
+  <div className="max-w-6xl mx-auto px-6 text-center relative z-10">
 
-          </div>
-        </section>
-      </main>
+    <h1 className="text-5xl lg:text-7xl font-bold leading-[1.1] text-gray-800">
+      Split expenses,
+      <br />
+      <span className="bg-gradient-to-r from-green-500 to-blue-600 bg-clip-text text-transparent">
+        beautifully & effortlessly
+      </span>
+    </h1>
+
+    <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
+      The smartest way to manage shared expenses — clean UI,
+      real-time updates, and zero awkward math.
+    </p>
+
+    <div className="mt-8 flex justify-center gap-4 flex-wrap">
+
+      <button  onClick={() => navigate("/register")} className="px-8 h-14 rounded-full text-white font-medium
+        bg-gradient-to-r from-green-500 to-green-600
+        shadow-lg shadow-green-500/30 hover:scale-105 transition">
+        Get Started
+      </button>
+
+      <button onClick={() => navigate("/login")} className="px-8 h-14 rounded-full bg-white/80 backdrop-blur 
+        border hover:bg-white transition">
+        Live Demo
+      </button>
+
+    </div>
+
+    {/* 💎 DASHBOARD CARD */}
+    <div className="mt-16 relative">
+
+      <div className="absolute inset-0 bg-white/50 blur-2xl rounded-2xl -z-10" />
+
+      <div className="bg-white/80 backdrop-blur-2xl border rounded-2xl shadow-2xl p-6">
+
+        <div className="h-[520px] rounded-xl bg-gray-100 flex items-center justify-center">
+           <img
+    src="/dashboard.png" // your image path
+    alt="Dashboard Preview"
+    className="w-full h-full object-cover"
+  />
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+      {/* ================= FEATURES ================= */}
+      <section className="py-20 max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8">
+
+        {[
+          ["Groups & Friends", "Create groups easily"],
+          ["Smart Splitting", "Auto calculations"],
+          ["Secure", "Your data is safe"],
+        ].map((item, i) => (
+          <motion.div
+            key={i}
+            whileHover={{ y: -10 }}
+            className="bg-white/80 backdrop-blur p-6 rounded-xl border shadow-md"
+          >
+            <h3 className="font-semibold text-lg mb-2">{item[0]}</h3>
+            <p className="text-muted-foreground">{item[1]}</p>
+          </motion.div>
+        ))}
+
+      </section>
+
+      {/* ================= CTA ================= */}
+      <section className="py-20 text-center max-w-3xl mx-auto px-6">
+        <h2 className="text-4xl font-bold mb-6">
+          Ready to simplify everything?
+        </h2>
+
+        <button
+          onClick={() => navigate("/register")}
+          className="bg-primary text-white px-10 h-14 rounded-full shadow-xl shadow-primary/30 hover:scale-110 transition"
+        >
+          Start Free Now
+        </button>
+      </section>
 
       {/* ================= FOOTER ================= */}
-      <footer className="border-t py-8 text-center text-sm text-muted-foreground bg-white">
-        © 2024 FairShare. All rights reserved.
+      <footer className="border-t py-10 text-center text-sm text-muted-foreground">
+        © 2026 Splitly. All rights reserved.
       </footer>
     </div>
   );

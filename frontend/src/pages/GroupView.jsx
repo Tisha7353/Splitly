@@ -90,7 +90,9 @@ export default function GroupView() {
     if (!user) return 0;
     return balances.find((b) => b.userId === user.id)?.amount || 0;
   }, [balances, user]);
-
+  console.log(user.id)
+  console.log(balances)
+console.log(myBalance)
   const balanceChartData = useMemo(
     () =>
       balances.map((b) => ({
