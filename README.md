@@ -4,14 +4,6 @@ Splitly is a modern full-stack web application that helps users track, split, an
 
 ---
 
-
-## 📸 Screenshots
-![Login Page](./screenshots/login.png)
-![Dashboard](./screenshots/dashboard.png)
-![Balances](./screenshots/balances.png)
-
----
-
 ## ✨ Features
 
 ### 👥 Group Management
