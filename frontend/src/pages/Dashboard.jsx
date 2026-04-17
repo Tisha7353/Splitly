@@ -28,12 +28,9 @@ export default function Dashboard() {
       <header className="bg-background border-b sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
 
-         <div className="flex items-center gap-3">
-            <img src="/Splitly.png" className="h-8 w-8 sm:h-9 sm:w-9" />
-            <span className="text-lg sm:text-xl font-semibold text-primary">
-              Splitly
-            </span>
-          </div>
+          <h1 className="text-xl sm:text-2xl font-display font-bold text-primary tracking-tight">
+            FairShare
+          </h1>
 
           <div className="flex items-center gap-2 sm:gap-3">
 
