@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { X, UserPlus } from "lucide-react";
+import toast from "react-hot-toast";
 
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -13,33 +14,30 @@ import {
   FormMessage,
 } from "./ui/form";
 
-import { useAddMember } from "../hooks/useGroups";
 
-export default function AddMemberModal({ groupId,  addMemberLocal }) {
+import { useSendInvite } from "../hooks/useGroups";
+export default function AddMemberModal({ groupId }) {
   const [open, setOpen] = useState(false);
-  const { addMember } = useAddMember();
+ 
+const { sendInvite } = useSendInvite();
+
 
   const form = useForm({
     defaultValues: { email: "" },
   });
 
   async function onSubmit(values) {
-    
-    
-   
-     if (!values.email) return;
+  if (!values.email) return;
 
-  const saved = await addMember({
+  await sendInvite({
     groupId,
     email: values.email,
   });
 
-  
-  addMemberLocal(saved.member);
-
+  toast.success("Invite sent 🎉");
   form.reset();
   setOpen(false);
-  }
+}
 
   /* ---------- Trigger ---------- */
   if (!open) {

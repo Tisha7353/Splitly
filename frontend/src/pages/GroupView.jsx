@@ -31,7 +31,7 @@ export default function GroupView() {
   const { id } = useParams();
   const { user } = useAuth();
 
-  const { group, loading: groupLoading,addMemberLocal } = useGroup(id);
+  const { group, loading: groupLoading} = useGroup(id);
   const { expenses = [], loading: expensesLoading ,  addExpense} = useExpenses(id);
   const {
     settlements = [],
@@ -137,26 +137,45 @@ console.log(myBalance)
             Back to Dashboard
           </Link>
 
-          <div className="flex flex-col md:flex-row justify-between gap-6">
+         <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
             <div>
               <h1 className="text-4xl font-bold mb-2">{group.name}</h1>
               <p className="opacity-80 max-w-xl">
                 {group.description || "No description"}
               </p>
 
-              <div className="flex items-center gap-4 mt-6">
-                <div className="flex -space-x-2">
-                  {members.map((m) => (
-                    <div
-                      key={m._id}
-                      className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-xs"
-                    >
-                      {(m.firstName || m.email || "U")[0].toUpperCase()}
-                    </div>
-                  ))}
-                </div>
+              <div className="flex flex-wrap items-center gap-3 mt-6">
+               <div className="flex -space-x-2">
+  {members.map((m) => (
+    <div key={m._id} className="relative group">
+      
+      {/* Avatar */}
+      <div className="
+         rounded-full bg-white/20
+        flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 text-[10px] sm:text-xs
+        cursor-pointer
+      ">
+        {(m.firstName || m.email || "U")[0].toUpperCase()}
+      </div>
 
-                <AddMemberDialog groupId={id}   addMemberLocal={addMemberLocal} />
+      {/* Tooltip */}
+      <div className="
+        absolute bottom-10 left-1/2 -translate-x-1/2
+        bg-black text-white text-xs
+        px-2 py-1 rounded-md
+        opacity-0 group-hover:opacity-100
+        transition
+        whitespace-nowrap
+        pointer-events-none
+      ">
+        {m.firstName || m.email}
+      </div>
+
+    </div>
+  ))}
+</div>
+
+                <AddMemberDialog groupId={id}    />
               </div>
             </div>
 
@@ -187,7 +206,10 @@ console.log(myBalance)
       {/* ===== CONTENT ===== */}
       <div className="max-w-7xl mx-auto px-4 -mt-5">
         <Tabs defaultValue="expenses" className="space-y-8">
-          <TabsList className="inline-flex bg-white rounded-xl shadow-md border p-6 gap-1 w-fit">
+        <TabsList className="
+  flex w-full sm:w-fit overflow-x-auto
+  bg-white rounded-xl shadow-md border p-2 gap-1
+">
             <TabsTrigger value="expenses" className="px-4 py-2 rounded-xl text-sm
   data-[state=active]:bg-[#E8F6F3]
   
@@ -235,7 +257,7 @@ console.log(myBalance)
                     className="bg-card p-5 rounded-xl border space-y-4"
                   >
                     {/* HEADER */}
-                    <div className="flex justify-between gap-4">
+                   <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-4">
                       <div>
                         <h3 className="font-semibold">{exp.description}</h3>
 
@@ -333,7 +355,7 @@ console.log(myBalance)
 
 
           {/* ===== BALANCES ===== */}
-          <TabsContent value="balances" className="grid md:grid-cols-2 gap-8">
+<TabsContent value="balances" className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Card>
               <CardHeader>
                 <CardTitle>Balance Chart</CardTitle>
@@ -497,7 +519,7 @@ console.log(myBalance)
                 </div>
 
                 {/* CHARTS */}
-                <div className="grid md:grid-cols-2 gap-8">
+               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                   {/* PIE CHART */}
                   <Card>

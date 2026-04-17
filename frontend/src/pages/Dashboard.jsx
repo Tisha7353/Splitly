@@ -8,11 +8,14 @@ import {
 } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { useGroups } from "../hooks/useGroups";
+import { useGroups, useInvites } from "../hooks/useGroups";
 import CreateGroupModal from "../components/CreateGroupModal";
-
+import { useState } from "react";
+import toast from "react-hot-toast";
 export default function Dashboard() {
   const { user, logout } = useAuth();
+  const { invites } = useInvites();
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const { groups, loading, setGroups } = useGroups();
 
@@ -20,7 +23,28 @@ export default function Dashboard() {
     logout();
     navigate("/");
   };
+const handleAccept = async (id,groupName) => {
+  await fetch(`http://localhost:5000/api/invite/${id}/accept`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+ toast.success(`You joined "${groupName}" 🎉`);
+  window.location.reload(); // quick refresh
+};
 
+const handleReject = async (id) => {
+  await fetch(`http://localhost:5000/api/invite/${id}/reject`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+ toast.error("Invite rejected ❌");
+
+  window.location.reload();
+};
   return (
     <div className="min-h-screen bg-secondary/30 pb-20">
 
@@ -28,20 +52,114 @@ export default function Dashboard() {
       <header className="bg-background border-b sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
 
-          <h1 className="text-xl sm:text-2xl font-display font-bold text-primary tracking-tight">
-            FairShare
-          </h1>
+           <div className="flex items-center gap-3">
+            <img src="/Splitly.png" className="h-8 w-8 sm:h-9 sm:w-9" />
+            <span className="text-lg sm:text-xl font-semibold text-primary">
+              Splitly
+            </span>
+          </div>
+
 
           <div className="flex items-center gap-2 sm:gap-3">
 
             <span className="text-sm font-medium text-muted-foreground hidden md:block">
               Welcome, {user?.firstName || "User"}
             </span>
+<div className="relative">
+  
+  <button
+    onClick={() => setOpen(!open)}
+    className="relative p-2 rounded-full hover:bg-muted"
+  >
+    <Bell className="w-5 h-5" />
 
-            <button className="p-2 rounded-full hover:bg-muted">
-              <Bell className="w-5 h-5 text-muted-foreground" />
-            </button>
+    {invites.length > 0 && (
+      <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs px-1 rounded-full">
+        {invites.length}
+      </span>
+    )}
+  </button>
 
+ {open && (
+  <div className="
+    absolute right-0 mt-3 w-80
+    bg-white rounded-2xl shadow-xl border
+    p-4 z-50
+    max-h-96 overflow-y-auto
+    animate-in fade-in zoom-in-95
+  ">
+    
+    {/* Header */}
+    <div className="flex items-center justify-between mb-3">
+      <h3 className="font-semibold text-gray-800">Invites</h3>
+      <span className="text-xs text-gray-400">
+        {invites.length} pending
+      </span>
+    </div>
+
+    {/* Empty state */}
+    {invites.length === 0 ? (
+      <div className="text-center py-6">
+        <p className="text-sm text-gray-500">No invites yet</p>
+      </div>
+    ) : (
+      <div className="space-y-3">
+        {invites.map((invite) => (
+          <div
+            key={invite._id}
+            className="
+              flex items-center justify-between
+              p-3 rounded-xl border
+              hover:bg-gray-50 transition
+            "
+          >
+            {/* Left */}
+            <div>
+              <p className="text-sm font-semibold text-gray-800">
+                {invite.groupId.name}
+              </p>
+              <p className="text-xs text-gray-500">
+                Invited by {invite.senderId.firstName}
+              </p>
+            </div>
+
+            {/* Actions */}
+            <div className="flex gap-2">
+              
+              <button
+                onClick={() => handleAccept(invite._id, invite.groupId.name)}
+                className="
+                  px-3 py-1 text-xs font-medium
+                  bg-emerald-500 text-white
+                  rounded-full
+                  hover:bg-emerald-600
+                  transition
+                "
+              >
+                Accept
+              </button>
+
+              <button
+                onClick={() => handleReject(invite._id)}
+                className="
+                  px-3 py-1 text-xs font-medium
+                  border border-gray-300
+                  rounded-full
+                  hover:bg-gray-100
+                  transition
+                "
+              >
+                Reject
+              </button>
+
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+)}
+</div>
             <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
               {user?.firstName?.[0]?.toUpperCase() || "U"}
             </div>

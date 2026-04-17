@@ -68,37 +68,51 @@ export function useGroup(id) {
       });
   }, [id, token]);
 
-  function addMemberLocal(member) {
-    setGroup(prev => ({
-      ...prev,
-      members: [...prev.members, member],
-    }));
-  }
+ 
 
-  return { group, loading, addMemberLocal };
+  return { group, loading };
 }
 /* ================= ADD MEMBER ================= */
-export function useAddMember() {
+export function useSendInvite() {
   const { token } = useAuth();
 
-  const addMember = async ({ groupId, email }) => {
-    const res = await fetch(`${API_URL}/${groupId}/members`, {
+  const sendInvite = async ({ groupId, email }) => {
+    const res = await fetch("http://localhost:5000/api/invite", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ groupId, email }),
     });
 
     const data = await res.json();
 
     if (!res.ok) {
-      throw new Error(data.message || "Failed to add member");
+      throw new Error(data.message || "Failed to send invite");
     }
 
     return data;
   };
 
-  return { addMember };
+  return { sendInvite };
+}
+
+export function useInvites() {
+  const { token } = useAuth();
+  const [invites, setInvites] = useState([]);
+
+  useEffect(() => {
+    if (!token) return;
+
+    fetch("http://localhost:5000/api/invite", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(res => res.json())
+      .then(setInvites);
+  }, [token]);
+
+  return { invites, setInvites };
 }
